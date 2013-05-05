@@ -13,7 +13,7 @@ def main():
             score = getScore(afinn_score, text)
 	    words = getWords(text)
             for word in words:
-                if word in term_score:
+                if word in term_score and len(word) > 0:
 		    term_score[word][0] = term_score[word][0] + score
 		    term_score[word][1] = term_score[word][1] + 1
 		    term_score[word][2] = float(term_score[word][0]) /term_score[word][1]
@@ -21,10 +21,12 @@ def main():
 		    term_score[word] = [score, 1, score]
     sorted_score = sorted(term_score.items(), key = lambda word: word[1][2])
     for term in sorted_score:
-	print term[0].encode('utf-8'), ' ', ('%.1f' % term[1][2]).rstrip('0').rstrip('.')
+	print term[0], str(float(term[1][2])).encode('utf-8')
+#('%.0f' % term[1][2]).rstrip('.')
+
 
 def getWords(text):
-    return [word.strip('":!@#$%^&*()_+/.,\\|?><~`][}{=-') for word in text.split()]            
+    return [word.strip('":!@#$%^&*()_+/.,\\|?><~`][}{=-\t\n\x0b\x0c\r ').encode('utf-8') for word in text.split()]            
 
 def getTermDictionary(sfile):
     result = {}
