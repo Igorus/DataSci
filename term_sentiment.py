@@ -21,7 +21,7 @@ def main():
 		    term_score[word] = [score, 1, score]
     sorted_score = sorted(term_score.items(), key = lambda word: word[1][2])
     for term in sorted_score:
-	print term[0].encode('utf-8'), ' ', term[1][2]
+	print term[0].encode('utf-8'), ' ', ('%.1f' % term[1][2]).rstrip('0').rstrip('.')
 
 def getWords(text):
     return [word.strip('":!@#$%^&*()_+/.,\\|?><~`][}{=-') for word in text.split()]            
